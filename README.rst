@@ -3,17 +3,10 @@ EVE
 ===
 
 
-Add a short description here!
+An open source Virtual Assistant meant for Linux Distributions
 
 
 Description
 ===========
 
-A longer description of your project goes here...
-
-
-Note
-====
-
-This project has been set up using PyScaffold 2.5.7. For details and usage
-information on PyScaffold see http://pyscaffold.readthedocs.org/.
+Epic Virtual Engine (EVE) is a voice assistant inspired by many others such as Siri, Cortana or maybe even Jarvis. It is meant to be open source so that anyone can experience the beauty of using a voice assistant.
