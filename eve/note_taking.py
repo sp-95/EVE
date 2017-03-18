@@ -23,14 +23,14 @@ def main():
         try:
             message = r.recognize_google(audio)
             punctuations = {
-                            '.': [' period', ' full stop'],
+                            '.': [' period', ' full stop', ' fullstop'],
                             '?': [' question mark'],
                             ',': [' comma'],
                             '!': [' exclamation mark'],
                             ':': [' colon'],
                             ';': [' semicolon'],
                             '"': ['double quote', 'double quotes'],
-                            '-': [' hyphen ', ' dash ']
+                            '-': [' hyphen ', ' dash '],
                             '_': [' underscore '],
                             '(': ['opening bracket ', 'bracket open '],
                             ')': [' closing bracket', ' bracket close']

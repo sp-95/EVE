@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<aiml>
+	<category>
+		<pattern>LOAD AIML B</pattern>
+		<template>
+			<learn>/Users/Sam/Documents/repos/venv/lib/python2.7/site-packages/aiml/standard/*.aiml</learn>
+		</template>
+	</category>
+</aiml>
