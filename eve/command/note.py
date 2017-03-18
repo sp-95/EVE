@@ -4,21 +4,15 @@
 import subprocess
 import speech_recognition as sr
 
-# from eve import command, conversation
-
-__author__ = "Shashanka Prajapati"
-
 
 def main():
     """Main entry points
     """
-    message = "I am EVE. How may I help you?"
-    print(message)
-    subprocess.call(['say', message])
-
+    subprocess.call(['say', 'Please tell me what to write'])
     r = sr.Recognizer()
-    with sr.Microphone() as source:
-        audio = r.listen(source)
+    while True:
+        with sr.Microphone() as source:
+            audio = r.listen(source)
 
         try:
             message = r.recognize_google(audio)
@@ -41,14 +35,13 @@ def main():
             print("You said " + message)
             with open('note.txt', 'w') as f:
                 f.write(message)
-            message = ""
+            break
         except sr.UnknownValueError:
             message = "I am sorry, could you repeat that for me?"
         except sr.RequestError:
             message = "Please check your internet connection"
         except:
             message = "Oh no! That was unexpected"
-        print(message)
         subprocess.call(['say', message])
 
 

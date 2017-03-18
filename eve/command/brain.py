@@ -6,6 +6,7 @@ import sys
 
 import letter
 import mailing
+import note
 
 
 WIT_AI_TOKEN = 'RKQDGHZBNPMYBX5Q3MAVVQNK3WHIGEXM'
@@ -51,11 +52,17 @@ def send_mail(request):
     sys.stdout = old_stdout
     return context
 
+def take_note(request):
+    context = request['context']
+    note.main()
+    return context
+
 actions = {
     'send': send,
     'getDate': get_date,
     'genLetter': gen_letter,
     'sendMail': send_mail,
+    'takeNote': take_note,
 }
 
 client = Wit(access_token=WIT_AI_TOKEN, actions=actions)
@@ -63,10 +70,9 @@ client = Wit(access_token=WIT_AI_TOKEN, actions=actions)
 def chat(message):
     session_id = uuid.uuid1()
 
-    old_stdout = sys.stdout
     sys.stdout = mystdout = StringIO()
     context = client.run_actions(session_id, message)
-    sys.stdout = old_stdout
+    sys.stdout = sys.__stdout__
     return mystdout.getvalue().rstrip('\n')
 
 
