@@ -4,7 +4,8 @@
 import subprocess
 import speech_recognition as sr
 
-from conversation import brain
+import command.brain
+import conversation.brain
 
 __author__ = "Shashanka Prajapati"
 
@@ -17,9 +18,9 @@ def main():
     subprocess.call(['say', message])
 
     r = sr.Recognizer()
-    command = True
-    active = True
-    while active:
+    command_mode = True
+    is_active = True
+    while is_active:
         with sr.Microphone() as source:
             audio = r.listen(source)
 
@@ -27,25 +28,24 @@ def main():
                 audio = r.recognize_google(audio)
                 print("You said " + audio)
                 if 'sleep' in audio:
-                    active = False
+                    is_active = False
                     message = "Goodbye! Hope to see you soon"
-                elif command:
+                elif command_mode:
                     if(any(x in audio for x in ['command off', 'off command', 'dialogue', 'conversation'])):
-                        command = False
-                        brain.startup()
+                        command_mode = False
+                        conversation.brain.startup()
                         if('conversation' in audio):
                             message = "Switched to conversation mode"
                         else:
                             message = "Switched to dialogue mode"
                     else:
-                        pass
-                        message = ""
+                        message = command.brain.chat(audio)
                 else:
                     if(any(x in audio for x in ['command', 'dialogue off', 'conversation off', 'off dialogue', 'off conversation'])):
-                        command = True
+                        command_mode = True
                         message = "Switched to command mode"
                     else:
-                        message = brain.chat(audio)
+                        message = conversation.brain.chat(audio)
             except sr.UnknownValueError:
                 message = "I am sorry, could you repeat that for me?"
             except sr.RequestError:
