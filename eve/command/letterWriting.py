@@ -3,7 +3,7 @@ import textwrap
 
 #outputFile = "file1.txt"
 
-class Application():
+class Letter():
     """docstring for application"""
 
     def readValue(self):
@@ -22,8 +22,8 @@ class Application():
         self.outputFile = raw_input("File name: ")
         
 
-    def generateApplication(self):
-        fo = open(outputFile,"w")
+    def generateLetter(self):
+        fo = open(self.outputFile,"w")
         fo.write("To,")
         fo.write("\n\t"+self.reciever)
         fo.write("\n")
@@ -35,16 +35,16 @@ class Application():
             fo.write(textwrap.fill(self.body, width=90))
         fo.close()
 
-        fo = open(outputFile,"a")    
+        fo = open(self.outputFile,"a")    
         fo.write("\n\nThank You")
         fo.write("\nYour sincerly,")
         fo.write("\n"+self.sender)
         fo.close()
 
 def main():
-    a = Application()
+    a = Letter()
     a.readValue()
-    a.generateApplication()
+    a.generateLetter()
 
 if __name__ == '__main__':
     main()
