@@ -3,6 +3,7 @@ import uuid
 from datetime import date, timedelta
 from cStringIO import StringIO
 import sys
+import letter
 
 
 WIT_AI_TOKEN = 'RKQDGHZBNPMYBX5Q3MAVVQNK3WHIGEXM'
@@ -34,6 +35,10 @@ def get_date(request):
 
 def gen_letter(request):
     context = request['context']
+    old_stdout = sys.stdout
+    sys.stdout = sys.__stdout__
+    context['file'] = letter.main()
+    sys.stdout = old_stdout
     return context
 
 actions = {
@@ -47,10 +52,11 @@ client = Wit(access_token=WIT_AI_TOKEN, actions=actions)
 def chat(message):
     session_id = uuid.uuid1()
 
-    old_stdout = sys.stdout
+    # old_stdout = sys.stdout
     sys.stdout = mystdout = StringIO()
     context = client.run_actions(session_id, message)
-    sys.stdout = old_stdout
+    # sys.stdout = old_stdout
+    sys.stdout = sys.__stdout__
     return mystdout.getvalue().rstrip('\n')
 
 
