@@ -6,27 +6,36 @@ from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
 from email import Encoders
 import os
+import subprocess
 # import tkinter as tk
 # from tkinter import filedialog
+
+import note
 
 
 class ServerMail():
     """docstring for mailServer"""
     def login(self):
+        subprocess.call(['say', 'Who is the sender?'])
         self.gmail_user = raw_input("Enter your gmail id: ")
         self.gmail_pwd = getpass.getpass('Password for %s: ' % self.gmail_user)
    
     def mail_service(self):
-        self.to = raw_input("Reciever gmail id: ")
+        subprocess.call(['say', 'Who is the receiver?'])
+        self.to = raw_input("Receiver gmail id: ")
+        subprocess.call(['say', 'What is the subject?'])
         self.subject = raw_input("Subject: ")
-        self.body = raw_input("Body: ")
 
-        attachment = raw_input("Do you want to attach a file(Y/n): ")
-        if attachment=='Y' or attachment=='y':
+        subprocess.call(['say', 'Tell me what to write'])
+        self.body = note.main().capitalize()
+
+        subprocess.call(['say', 'Do you want to attach a file?'])
+        attachment = note.main()
+        if attachment.lower().startswith('y'):
             # root = tk.Tk()
             # root.withdraw()
             # self.file_path = filedialog.askopenfilename()
-            self.file_path = raw_input("Enter file name:")
+            self.file_path = raw_input("Enter file name: ")
         else:
             self.file_path = None
         

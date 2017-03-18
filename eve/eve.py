@@ -29,7 +29,7 @@ def main():
 
             try:
                 audio = r.recognize_google(audio)
-                print("You said " + audio)
+                # print("You said " + audio)
                 if 'sleep' in audio:
                     is_active = False
                     message = "Goodbye! Hope to see you soon"

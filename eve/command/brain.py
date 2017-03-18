@@ -7,6 +7,7 @@ import sys
 import letter
 import mailing
 import note
+import song
 
 
 WIT_AI_TOKEN = 'RKQDGHZBNPMYBX5Q3MAVVQNK3WHIGEXM'
@@ -54,7 +55,12 @@ def send_mail(request):
 
 def take_note(request):
     context = request['context']
-    note.main()
+    note.main(save=True)
+    return context
+
+def play_song(request):
+    context = request['context']
+    song.main()
     return context
 
 actions = {
@@ -63,6 +69,7 @@ actions = {
     'genLetter': gen_letter,
     'sendMail': send_mail,
     'takeNote': take_note,
+    'playSong': play_song,
 }
 
 client = Wit(access_token=WIT_AI_TOKEN, actions=actions)

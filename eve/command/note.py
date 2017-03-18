@@ -5,10 +5,11 @@ import subprocess
 import speech_recognition as sr
 
 
-def main():
+def main(save=False):
     """Main entry points
     """
-    subprocess.call(['say', 'Please tell me what to write'])
+    if save:
+        subprocess.call(['say', 'Please tell me what to write'])
     r = sr.Recognizer()
     while True:
         with sr.Microphone() as source:
@@ -32,10 +33,11 @@ def main():
             for k, v in punctuations.items():
                 for x in v:
                     message = message.replace(x, k)
-            print("You said " + message)
-            with open('note.txt', 'w') as f:
-                f.write(message)
-            break
+            # print("You said " + message)
+            if save:
+                with open('note.txt', 'w') as f:
+                    f.write(message)
+            return message
         except sr.UnknownValueError:
             message = "I am sorry, could you repeat that for me?"
         except sr.RequestError:
