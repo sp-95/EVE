@@ -1,13 +1,11 @@
 To,
-	Principal
+	Rishav4894@gmail.com
 
-Subject: Leave for two days
+Subject: Hello
 
 Sir/Maam,
-	This is a body. This is a body.This is a body.This is a body.This is a body.This is a
-body.This is a body.This is a body.This is a body.This is a body.This is a body.This is a
-body.This is a body.
+	Hello rishav
 
 Thank You
 Your sincerly,
-Shashanka
+Rishav.1si13cs135@gmail.com

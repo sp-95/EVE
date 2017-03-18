@@ -3,6 +3,7 @@
 
 import subprocess
 import speech_recognition as sr
+import random
 
 import command.brain
 import conversation.brain
@@ -16,6 +17,8 @@ def main():
     message = "I am EVE. How may I help you?"
     print(message)
     subprocess.call(['say', message])
+
+    helpStatements = ["Can I help you with something else?", "Is there something else you need?", "Anything else?", "Will that be all?"]
 
     r = sr.Recognizer()
     command_mode = True
@@ -55,6 +58,8 @@ def main():
                 print(e)
             print(message)
             subprocess.call(['say', message])
+            if is_active and command_mode:
+                subprocess.call(['say', random.choice(helpStatements)])
 
 
 if __name__ == "__main__":

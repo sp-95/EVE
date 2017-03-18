@@ -3,7 +3,9 @@ import uuid
 from datetime import date, timedelta
 from cStringIO import StringIO
 import sys
+
 import letter
+import mailing
 
 
 WIT_AI_TOKEN = 'RKQDGHZBNPMYBX5Q3MAVVQNK3WHIGEXM'
@@ -41,10 +43,19 @@ def gen_letter(request):
     sys.stdout = old_stdout
     return context
 
+def send_mail(request):
+    context = request['context']
+    old_stdout = sys.stdout
+    sys.stdout = sys.__stdout__
+    context['status'] = mailing.main()
+    sys.stdout = old_stdout
+    return context
+
 actions = {
     'send': send,
     'getDate': get_date,
     'genLetter': gen_letter,
+    'sendMail': send_mail,
 }
 
 client = Wit(access_token=WIT_AI_TOKEN, actions=actions)
@@ -52,11 +63,10 @@ client = Wit(access_token=WIT_AI_TOKEN, actions=actions)
 def chat(message):
     session_id = uuid.uuid1()
 
-    # old_stdout = sys.stdout
+    old_stdout = sys.stdout
     sys.stdout = mystdout = StringIO()
     context = client.run_actions(session_id, message)
-    # sys.stdout = old_stdout
-    sys.stdout = sys.__stdout__
+    sys.stdout = old_stdout
     return mystdout.getvalue().rstrip('\n')
 
 

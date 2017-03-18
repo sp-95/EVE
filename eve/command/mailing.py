@@ -6,11 +6,14 @@ from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
 from email import Encoders
 import os
+# import tkinter as tk
+# from tkinter import filedialog
+
 
 class ServerMail():
     """docstring for mailServer"""
     def login(self):
-        self.gmail_user = raw_input("Your gmail id: ")
+        self.gmail_user = raw_input("Enter your gmail id: ")
         self.gmail_pwd = getpass.getpass('Password for %s: ' % self.gmail_user)
    
     def mail_service(self):
@@ -20,9 +23,12 @@ class ServerMail():
 
         attachment = raw_input("Do you want to attach a file(Y/n): ")
         if attachment=='Y' or attachment=='y':
-            self.attach_file = raw_input("File name: ")
+            # root = tk.Tk()
+            # root.withdraw()
+            # self.file_path = filedialog.askopenfilename()
+            self.file_path = raw_input("Enter file name:")
         else:
-            self.attach_file=None
+            self.file_path = None
         
     def send_mail(self):
         msg = MIMEMultipart()
@@ -31,11 +37,11 @@ class ServerMail():
         msg['Subject'] = self.subject
         msg.attach(MIMEText(self.body,'plain'))
 
-        if self.attach_file:
+        if self.file_path:
             part = MIMEBase('application', 'octet-stream')
-            part.set_payload(open(self.attach_file, 'rb').read())
+            part.set_payload(open(self.file_path, 'rb').read())
             Encoders.encode_base64(part)
-            part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(self.attach_file))
+            part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(self.file_path))
             msg.attach(part)
 
         try:
@@ -46,16 +52,15 @@ class ServerMail():
             mailServer.login(self.gmail_user, self.gmail_pwd)
             mailServer.sendmail(self.gmail_user, self.to, msg.as_string())
             mailServer.quit()
-            print 'Successfully sent the mail'
-        except Exception as e:
-            raise e
-            print 'Failed to send the mail'
+            return 'Successfully sent'
+        except:
+            return 'Failed to send'
 
 def main():
     m = ServerMail()
     m.login()
     m.mail_service()
-    m.send_mail()
+    return m.send_mail()
 
 if __name__ == '__main__':
     main()
